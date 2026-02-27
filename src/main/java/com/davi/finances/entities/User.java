@@ -22,7 +22,7 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private List<Transaction> transactionList;
 
 }
