@@ -8,8 +8,6 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Table(name = "transaction")
-@Entity(name="transaction")
 public class Transaction {
     @Id
     @GeneratedValue
