@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String email;
@@ -25,4 +25,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactionList;
 
+    public User(String name,String email,String password){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }
