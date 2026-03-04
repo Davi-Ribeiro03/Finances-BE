@@ -4,22 +4,25 @@ import com.davi.finances.enums.Categories;
 import com.davi.finances.enums.transactionsType;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Table(name = "transaction")
-@Entity(name="transaction")
+@Table(name = "transactions")
+@Entity(name="transactions")
+@Getter
 public class Transaction {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private BigDecimal value;
     private Date date;
     private String description;
     private Categories category;
-    private String month_reference;
+    @Column(name = "month_reference")
+    private Date monthReference;
     @Enumerated(EnumType.STRING)
     private transactionsType type;
 
