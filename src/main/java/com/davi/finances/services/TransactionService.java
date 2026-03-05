@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -72,5 +71,11 @@ public class TransactionService {
         tRepo.save(transaction);
 
         return ResponseEntity.ok().body(transactionData);
+    }
+
+    public ResponseEntity Delete(Long id) {
+        tRepo.deleteById(id);
+
+        return ResponseEntity.ok().build();
     }
 }

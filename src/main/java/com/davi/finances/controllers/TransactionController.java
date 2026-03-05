@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -34,5 +30,10 @@ public class TransactionController {
     @PutMapping()
     public ResponseEntity EditTransaction(@RequestBody TransactionDto transaction){
         return tService.Edit(transaction);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity DeleteTransaction(@PathVariable Long id){
+        return tService.Delete(id);
     }
 }
