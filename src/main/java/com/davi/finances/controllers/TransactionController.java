@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +20,8 @@ public class TransactionController {
     private TransactionService tService;
 
     @GetMapping()
-    public ResponseEntity GetAll(@RequestHeader Date month){
-        return tService.getAll(month);
+    public ResponseEntity GetAll(@RequestParam LocalDate monthReference){
+        return tService.GetAll(monthReference);
     }
 
 //    @GetMapping("/{id}")

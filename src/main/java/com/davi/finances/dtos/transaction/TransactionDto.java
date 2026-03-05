@@ -6,12 +6,13 @@ import com.davi.finances.enums.Categories;
 import com.davi.finances.enums.transactionsType;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 public record TransactionDto(
         Long id, String title, BigDecimal value, Date date,
-        String description, Categories categories, Date monthReference,
-        transactionsType type, User user) {
+        String description, Categories category, LocalDate monthReference,
+        transactionsType type, Integer userId) {
 
     public static TransactionDto fromEntity(Transaction transaction) {
         return new TransactionDto(
