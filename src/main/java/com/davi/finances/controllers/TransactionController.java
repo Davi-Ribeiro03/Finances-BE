@@ -30,17 +30,9 @@ public class TransactionController {
 
         return tService.Add(transaction);
     }
-//
-//    @PutMapping()
-//    public ResponseEntity<TransactionDto> EditTransaction(@RequestBody TransactionDto transaction){
-//        transactions.remove(transaction.id().intValue()-1);
-//        transactions.add( transaction);
-//
-//        return transactions
-//                .stream()
-//                .filter(t -> t.id().equals(transaction.id()))
-//                .findFirst()
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
+
+    @PutMapping()
+    public ResponseEntity EditTransaction(@RequestBody TransactionDto transaction){
+        return tService.Edit(transaction);
+    }
 }

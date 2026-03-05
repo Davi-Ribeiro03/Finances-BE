@@ -52,4 +52,25 @@ public class TransactionService {
         }
 
     }
+
+    public ResponseEntity Edit(TransactionDto transactionData) {
+        tRepo.deleteById(transactionData.id());
+        User user = new User();
+        user.setId(transactionData.userId());
+
+        Transaction transaction = new Transaction(
+                transactionData.title(),
+                transactionData.value(),
+                transactionData.date(),
+                transactionData.description(),
+                transactionData.category(),
+                transactionData.monthReference(),
+                transactionData.type(),
+                user
+        );
+
+        tRepo.save(transaction);
+
+        return ResponseEntity.ok().body(transactionData);
+    }
 }
