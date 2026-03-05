@@ -24,22 +24,12 @@ public class TransactionController {
         return tService.GetAll(monthReference);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<TransactionDto> GetAll(@PathVariable Long id){
-//        return transactions
-//                .stream()
-//                .filter(t -> t.id().equals(id))
-//                .findFirst()
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-//
-//    @PostMapping()
-//    public ResponseEntity<List<TransactionDto>> AddTransaction(@RequestBody TransactionDto transaction){
-//        transactions.add(transaction);
-//
-//        return ResponseEntity.ok(transactions);
-//    }
+
+    @PostMapping()
+    public ResponseEntity AddTransaction(@RequestBody TransactionDto transaction){
+
+        return tService.Add(transaction);
+    }
 //
 //    @PutMapping()
 //    public ResponseEntity<TransactionDto> EditTransaction(@RequestBody TransactionDto transaction){

@@ -1,0 +1,2 @@
+ALTER TABLE transactions
+ALTER COLUMN type TYPE VARCHAR(20);

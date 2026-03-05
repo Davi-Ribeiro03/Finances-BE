@@ -24,7 +24,7 @@ public record TransactionDto(
                 transaction.getCategory(),
                 transaction.getMonthReference(),
                 transaction.getType(),
-                transaction.getUser()
+                transaction.getUser().getId()
         );
     }
 }
