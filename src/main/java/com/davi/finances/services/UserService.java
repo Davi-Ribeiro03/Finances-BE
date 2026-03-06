@@ -1,12 +1,10 @@
 package com.davi.finances.services;
 
-import com.davi.finances.dtos.user.LoginDto;
-import com.davi.finances.dtos.user.ResponseDto;
-import com.davi.finances.dtos.user.RegisterDto;
+import com.davi.finances.dtos.user.LoginUserDto;
+import com.davi.finances.dtos.user.RegisterUserDto;
 import com.davi.finances.entities.User;
 import com.davi.finances.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,28 +12,22 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public ResponseEntity<ResponseDto> login(LoginDto userData) {
-        User user = repository.getByEmail(userData.email());
-        if(user != null && user.getPassword().equals(userData.password())){
-            ResponseDto response = new ResponseDto(userData.email(), "Token 123");
-            return ResponseEntity.ok(response);
-        }else{
-            return ResponseEntity.status(401).build();
-        }
+    public User login(LoginUserDto userData) {
+        return repository.getByEmail(userData.email());
     }
 
-    public ResponseEntity<ResponseDto> register(RegisterDto userData) {
+    public User register(RegisterUserDto userData) {
         User userIsRegistered = repository.getByEmail(userData.email());
+
         if(userIsRegistered != null){
-            return ResponseEntity.badRequest().build();
+            throw new RuntimeException("User already registered");
         }
-        User user = new User(userData.name(), userData.email(), userData.password());
-        System.out.println(user);
+
         try {
-            repository.save(user);
-            return ResponseEntity.ok(new ResponseDto(userData.email(), "token 123"));
+            User user = new User(userData.name(), userData.email(), userData.password());
+            return repository.save(user);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+            throw new RuntimeException("internal error");
         }
     }
 }
