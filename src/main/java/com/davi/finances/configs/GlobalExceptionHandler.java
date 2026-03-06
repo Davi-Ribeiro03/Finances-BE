@@ -13,6 +13,6 @@ public class GlobalExceptionHandler {
         ApiResponse<Object> response =
                 new ApiResponse<>(false, ex.getMessage(), null);
 
-        return ResponseEntity.internalServerError().body(response);
+        return ResponseEntity.badRequest().body(response);
     }
 }

@@ -18,17 +18,11 @@ public class TransactionService {
     @Autowired
     private TransactionRepository tRepo;
 
-    public ResponseEntity<List<TransactionDto>> GetAll(LocalDate monthReference) {
-        List<Transaction> transactions = tRepo.findAllByMonthReference(monthReference);
-
-        List<TransactionDto> response = transactions.stream()
-                .map(TransactionDto::fromEntity)
-                .toList();
-
-        return ResponseEntity.ok(response);
+    public List<Transaction> GetAll(LocalDate monthReference) {
+        return tRepo.findAllByMonthReference(monthReference);
     }
 
-    public ResponseEntity Add(TransactionDto transactionData) {
+    public Transaction Add(TransactionDto transactionData) {
         User user = new User();
         user.setId(transactionData.userId());
 
@@ -43,16 +37,11 @@ public class TransactionService {
                 user
         );
 
-        try {
-            tRepo.save(transaction);
-            return ResponseEntity.status(HttpStatus.CREATED).body(transactionData);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        return tRepo.save(transaction);
 
     }
 
-    public ResponseEntity Edit(TransactionDto transactionData) {
+    public Transaction Edit(TransactionDto transactionData) {
         tRepo.deleteById(transactionData.id());
         User user = new User();
         user.setId(transactionData.userId());
@@ -68,14 +57,10 @@ public class TransactionService {
                 user
         );
 
-        tRepo.save(transaction);
-
-        return ResponseEntity.ok().body(transactionData);
+        return tRepo.save(transaction);
     }
 
-    public ResponseEntity Delete(Long id) {
+    public void Delete(Long id) {
         tRepo.deleteById(id);
-
-        return ResponseEntity.ok().build();
     }
 }
