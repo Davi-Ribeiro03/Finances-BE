@@ -13,7 +13,12 @@ public class UserService {
     private UserRepository repository;
 
     public User login(LoginUserDto userData) {
-        return repository.getByEmail(userData.email());
+        User user = repository.getByEmail(userData.email());
+        if(user == null || !user.getPassword().equals(userData.password())){
+            throw new RuntimeException("Login error");
+        }
+
+        return user;
     }
 
     public User register(RegisterUserDto userData) {

@@ -21,21 +21,19 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> Login(@RequestBody LoginUserDto userData){
-        User user = userService.login(userData);
+        try {
+            User user = userService.login(userData);
 
-        if(user != null && user.getPassword().equals(userData.password())){
             ApiResponse<ResponseUserDto> response = ApiResponse.success(
                     "successful login",
-                    new ResponseUserDto(
-                            userData.email(),
-                            "Token 123"
-                    )
+                    new ResponseUserDto(user.getName(), user.getEmail(), "Token 123")
             );
             return ResponseEntity.ok(response);
-        }else{
-            ApiResponse<Object> responseError = ApiResponse.error("Login error");
+        } catch (RuntimeException e) {
+            ApiResponse<Object> responseError = ApiResponse.error(e.getMessage());
             return ResponseEntity.badRequest().body(responseError);
         }
+
     }
 
     @PostMapping("/register")
@@ -44,7 +42,7 @@ public class UserController {
             User user = userService.register(userData);
             ApiResponse<ResponseUserDto> response = ApiResponse.success(
                     "User successfully registered",
-                    new ResponseUserDto(user.getEmail(), "Token123")
+                    new ResponseUserDto(user.getName(), user.getEmail(), "Token123")
             );
 
             return ResponseEntity.ok().body(response);
