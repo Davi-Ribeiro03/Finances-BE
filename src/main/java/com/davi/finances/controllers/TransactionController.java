@@ -2,14 +2,13 @@ package com.davi.finances.controllers;
 
 import com.davi.finances.configs.ApiResponse;
 import com.davi.finances.dtos.transaction.TransactionDto;
-import com.davi.finances.entities.Transaction;
+import com.davi.finances.dtos.transaction.TransactionsWithStatistics;
 import com.davi.finances.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -19,14 +18,10 @@ public class TransactionController {
     private TransactionService tService;
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<List<TransactionDto>>> GetAll(@RequestParam LocalDate monthReference){
-        List<Transaction> transactions = tService.GetAll(monthReference);
+    public ResponseEntity<ApiResponse<TransactionsWithStatistics>> GetAll(@RequestParam LocalDate monthReference){
+        TransactionsWithStatistics transactions = tService.GetAll(monthReference);
 
-        List<TransactionDto> transactionsDto = transactions.stream()
-                .map(TransactionDto::fromEntity)
-                .toList();
-
-        ApiResponse<List<TransactionDto>> response = ApiResponse.success("Transaction list",transactionsDto);
+        ApiResponse<TransactionsWithStatistics> response = ApiResponse.success("Transaction list", transactions);
 
         return ResponseEntity.ok(response);
     }
